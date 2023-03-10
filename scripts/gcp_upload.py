@@ -1,5 +1,10 @@
 from google.cloud import storage
 
+'''
+Functions for GCP support
+'''
+
+
 def upload_blob(bucket_name, file_name, blob_name, service_account_file):
 
     storage_client = storage.Client.from_service_account_json(service_account_file)

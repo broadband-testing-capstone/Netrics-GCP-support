@@ -11,7 +11,7 @@ TZ_STR='US/Pacific'
 
 
 def get_args():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description='Run Ookla and NDT7 tests N times given a starting time and date')
     parser.add_argument('--service_account', help='service account file json', required=True)
     parser.add_argument('--bucket_name', help='bucket name to upload to', required=True)
     parser.add_argument('--start', help='starting date in PST TZ and ISO 8601 format (yyyy-mm-ddTHH:MM:SS)', required=True)
@@ -46,17 +46,12 @@ if __name__ == '__main__':
     print('running netrics')
     args = get_args()    
     
-    #format start time and then create jobs with increment n times
-    
     
     #Timezone naive solution
     run_date = datetime.fromisoformat(args.start)
-    #run_date = run_date.astimezone(tz=pytz.timezone(TZ_STR))
     #-8:00 hours offset for PST from UTC
     now = datetime.now() - timedelta(hours=8)
-    print(now)
-    print(run_date)
-     
+    
     #check that start is in the future
     if not run_date > now:
         raise ValueError('entered start time already past.')
