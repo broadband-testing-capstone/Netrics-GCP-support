@@ -1,0 +1,6 @@
+env
+ookla.tmp
+run_netrics.sh
+__pycache__
+logs
+
