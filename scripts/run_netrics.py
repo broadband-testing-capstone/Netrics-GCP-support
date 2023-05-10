@@ -17,10 +17,11 @@ def get_args():
     parser = argparse.ArgumentParser(description='Run Ookla and NDT7 tests N times given a starting time and date')
     parser.add_argument('--service_account', help='service account file json', required=True)
     parser.add_argument('--bucket_name', help='bucket name to upload to', required=True)
-    parser.add_argument('--start', help='starting date in PST TZ and ISO 8601 format (yyyy-mm-ddTHH:MM:SS)', required=True)
+    parser.add_argument('--start', help='starting date in local timezone and ISO 8601 format (yyyy-mm-ddTHH:MM:SS)', required=True)
     parser.add_argument('--interval', type=int, help='interval in minutes', required=False, default=5)
     parser.add_argument('--n', type=int, help='number of tests, do not exceed 40 in 24hrs', required=False, default=10)    
     parser.add_argument('--logs', type=str, help='directory for logs', required=True)    
+    parser.add_argument('--offset', type=int, help='offset from UTC (-7 is default for PST with daylight savings', required=False, default=-7)
 
     return parser.parse_args()
 
@@ -52,7 +53,7 @@ if __name__ == '__main__':
     #Timezone naive solution
     run_date = datetime.fromisoformat(args.start)
     #-7:00 hours offset for PST from UTC
-    now = datetime.now() - timedelta(hours=7)
+    now = datetime.now() + timedelta(hours=args.offset)
     
  
     #check that start is in the future
@@ -60,19 +61,23 @@ if __name__ == '__main__':
         raise ValueError('entered start time already past.')
     
     path = args.logs
+    if not path[-1] == '/':
+        path = path + '/'
+    
     if os.path.exists(path):
         print('logging files to ' + path)
     else:
         print('invalid path for logging')
         sys.exit()
- 
-    filename=args.logs+(run_date.isoformat())+'.log'
+    
+        
+    filename=path+(run_date.isoformat())+'.log'
     try:
         os.remove(filename)
     except OSError:
         pass
 
-    logging.basicConfig(filename=args.logs+(run_date.isoformat())+'.log', encoding='utf-8', level=logging.INFO)
+    logging.basicConfig(filename=path+(run_date.isoformat())+'.log', encoding='utf-8', level=logging.INFO)
     logging.info('Command: ' + ' '.join(sys.argv))    
     
     inc = timedelta(minutes=args.interval)
@@ -88,13 +93,7 @@ if __name__ == '__main__':
         #increment start time by inc
         run_date += inc
     
-    
-
-    #try:
     sched.start()
-    #except:
-    #    print('Error starting schedule')
-    #    sys.exit()
     
     
     
