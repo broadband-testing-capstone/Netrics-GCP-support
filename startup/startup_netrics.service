@@ -1,0 +1,12 @@
+[Unit]
+Description=YOUR DESCRIPTION
+Requires=network-online.target 
+After=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/etc/netrics_gcp/startup_netrics.sh
+
+[Install]
+WantedBy=multi-user.target
