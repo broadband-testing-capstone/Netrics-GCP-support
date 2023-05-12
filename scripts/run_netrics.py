@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 from gcp_upload import upload_blob, get_bucket
 import argparse
 import subprocess
