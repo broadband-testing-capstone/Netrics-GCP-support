@@ -17,6 +17,8 @@ echo "installing python modules"
 sudo pip install -r requirements.txt
 
 sudo mkdir /etc/netrics_gcp/
+
+#replace dellemc2
 sudo mkdir /home/dellemc2/logs
 sudo mkdir /etc/netrics_gcp/config/
 
@@ -27,6 +29,8 @@ sudo cp service-account-keyfile.json /etc/netrics_gcp/config
 
 sudo chmod +x /etc/netrics_gcp/run_netrics.py
 sudo chmod +x /etc/netrics_gcp/startup_netrics.sh
+
+#replace dellemc2
 sudo chmod 755 /home/dellemc2/logs
 
 sudo systemctl enable startup_netrics.service
