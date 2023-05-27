@@ -7,7 +7,7 @@ Download the repository to your device. Edit startup/startup_netrics.sh and chan
   python3 scripts/run_netrics.py -h 
   ```
 Edit setup.sh similarly so /home/<username> is correct. 
-To finish setup, run,
+To finish setup, run this in the same directory that your service account key is in,
   ```
   bash setup.sh
   ```
