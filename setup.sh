@@ -31,7 +31,7 @@ sudo chmod +x /etc/netrics_gcp/run_netrics.py
 sudo chmod +x /etc/netrics_gcp/startup_netrics.sh
 
 #replace dellemc2
-sudo chmod 755 /home/dellemc2/logs
+sudo chmod 644 /home/dellemc2/logs
 
 sudo systemctl enable startup_netrics.service
 sudo systemctl is-enabled startup_netrics.service
