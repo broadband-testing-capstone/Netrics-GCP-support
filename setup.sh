@@ -14,6 +14,7 @@ echo "deleting download"
 rm -f nm-exp-active-netrics-v1.0.0-amd64.deb
 
 echo "installing python modules"
+sudo apt install pip
 sudo pip install -r requirements.txt
 
 sudo mkdir /etc/netrics_gcp/
